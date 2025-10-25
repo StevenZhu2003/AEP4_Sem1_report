@@ -1,0 +1,78 @@
+%=========================== reportstyle.sty ============================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{reportstyle}[2025/05/22 House style for technical reports]
+
+% ----------------------------------------------------------------------
+% 0. Packages required by the style
+% ----------------------------------------------------------------------
+\RequirePackage[
+a4paper,
+margin=1in      % keep original 1-in margin
+]{geometry}
+\RequirePackage{amsmath}
+\RequirePackage{graphicx}
+\RequirePackage{siunitx}
+\RequirePackage{setspace}
+\RequirePackage{indentfirst}
+\RequirePackage{titlesec}
+\RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
+\RequirePackage{cite}
+\RequirePackage{fancyhdr}
+\RequirePackage{booktabs}
+\RequirePackage[hidelinks]{hyperref}
+
+% ----------------------------------------------------------------------
+% 1. Spacing and paragraph layout
+% ----------------------------------------------------------------------
+\setstretch{1.25}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{2em}
+
+% section / subsection spacing (same as cls)
+\titlespacing{\section}{0pt}{*1}{*0}
+\titlespacing{\subsection}{0pt}{*1}{*0}
+
+% ----------------------------------------------------------------------
+% 2. Header / footer configuration
+% ----------------------------------------------------------------------
+\def\@moduleheader{Header text}
+\newcommand{\moduleheader}[1]{\def\@moduleheader{#1}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\@moduleheader}
+\fancyhead[R]{\includegraphics[width=0.29\textwidth]{logo.png}}
+
+% ----------------------------------------------------------------------
+% 3. Title-image interface (same names as in .cls)
+% ----------------------------------------------------------------------
+\def\@titleimage{Title_image.png}
+\def\@titleimageheight{0.5\textwidth}
+\newcommand{\titleimage}[1]{\def\@titleimage{#1}}
+\newcommand{\titleimageheight}[1]{\def\@titleimageheight{#1}}
+
+% ----------------------------------------------------------------------
+% 4. Custom \maketitle (borrowed from the class)
+% ----------------------------------------------------------------------
+\makeatletter
+\renewcommand{\maketitle}{%
+	\begin{titlepage}
+		\thispagestyle{fancy}
+		\fancyfoot[C]{}
+		\centering
+		\vspace*{0.05\textheight}
+		{\Huge\bfseries \@title\par}
+		\vspace{0.1\textheight}
+		\includegraphics[height=\@titleimageheight]{\@titleimage}\par
+		\vspace{0.1\textheight}
+		{\Large \@author\par}
+		\vspace{0.015\textheight}
+		\@date
+\end{titlepage}}
+\makeatother
+
+% ----------------------------------------------------------------------
+% End of package
+% ----------------------------------------------------------------------
+\endinput
