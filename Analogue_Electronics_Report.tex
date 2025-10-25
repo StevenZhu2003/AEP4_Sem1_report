@@ -132,9 +132,9 @@
 		A_v = \frac{V_{out,\ \text{peak to peak}}}{V_{in,\ \text{peak to peak}}} = \frac{5.33}{0.2} = -26.65
 		\label{eq:transGain}
 	\end{equation}
-	As mentioned in equation~\eqref{eq:invAmpGain}, the gain is directly proportional to the parallel resistance of output resistance $r_o$ and the resistance of the resistor $R_D$. If $R_D$ keep increases, the parallel resistance will be smaller, and thus reduce the gain.
+	As mentioned in equation~\eqref{eq:invAmpGain}, the gain is directly proportional to the parallel resistance of output resistance $r_o$ and the resistance of the resistor $R_D$. If $R_D$ keep increases, the parallel resistance will be larger, and thus increase the gain.
 	
-	The frequency response of the amplifier could be measured using the AC simulation, a Bode diagram that measures the frequency response of the circuit between $\SI{1}{\hertz}$ and $\SI{1}{\giga\hertz}$ is shown in Figure~\ref{fig:ac_analysis_inv}. The low frequency gain of this amplifier is measured to be $-26.80$, which matches the result calculated in transient analysis (equation~\eqref{eq:transGain}). The gain starts to drop at high frequency, the $\SI{-3}{\decibel}$ bandwidth of the amplifier is measured to be around $\SI{65}{\mega\hertz}$.
+	The frequency response of the amplifier could be measured using the AC simulation, a Bode diagram that measures the frequency response of the circuit between $\SI{1}{\hertz}$ and $\SI{1}{\giga\hertz}$ is shown in Figure~\ref{fig:ac_analysis_inv}. The low frequency gain of this amplifier is measured to be $-26.80$, which matches the result calculated in transient analysis (equation~\eqref{eq:transGain}). The gain starts to drop at high frequency, the $\SI{-3}{\decibel}$ bandwidth of the amplifier is measured to be around $\SI{100}{\mega\hertz}$.
 	
 	\begin{figure}[htbp]
 		\centering
@@ -143,7 +143,7 @@
 		\label{fig:ac_analysis_inv}
 	\end{figure}
 	
-	Another transient simulation is taken to measure the gain of the amplifier at $\SI{100}{\mega\hertz}$, which is outside the bandwidth of the amplifier, this gives the gain to be $19.05$, which is different from the measured value $14.23$ in AC simulation.
+	Another transient simulation is taken to measure the gain of the amplifier at $\SI{100}{\mega\hertz}$, which is outside the bandwidth of the amplifier, this gives the gain to be $8.343$, which is close to the measured value $7.0$ in AC simulation.
 	
 	If the circuit is built in reality, the actual frequency response of the circuit would possibly be way worse than the measured result. This is because in reality, there's more capacitance between pins and wires while the model here only considers the parasitic capacitance in the MOSFET.
 	
@@ -155,12 +155,12 @@
 	
 	\begin{figure}[htbp]
 		\centering
-		\includegraphics[width=0.35\linewidth]{Figures/E3_Current_Mirror/current_mirror}
+		\includegraphics[width=0.3\linewidth]{Figures/E3_Current_Mirror/current_mirror}
 		\caption{Basic current mirror circuit}
 		\label{fig:currentMirror}
 	\end{figure}
 	
-	Figure~\ref{fig:ioutIin} shows the plot of $I_{out}$ against $I_{in}$ when the MOSFET $M_2$ has it's drain connected to $V_{DD}$, and Figure~\ref{fig:ioutVgs} shows the plot of $I_{out}$ against $V_{DS}$ under a constant value of $I_{in} = \SI{100}{\micro\ampere}$.
+	Figure~\ref{fig:ioutIin} shows the plot of $I_{out}$ against $I_{in}$ when the MOSFET $M_2$ has it's drain connected to $V_{DD}$, and Figure~\ref{fig:ioutVgs} shows the plot of $I_{out}$ against $V_{DS}$ under a constant value of $I_{in} = \SI{100}{\micro\ampere}$. It is measured that the output current is almost equal to the input current when $V_{DS} = \SI{1.05}{\volt}$. The output current is equal to the input current at this point because both device have the same $V_{DS}$ at this point, and thus same channel length modulation effect.
 	
 	\begin{figure}[htbp]
 		\centering
@@ -176,5 +176,40 @@
 		\end{subfigure}
 		\caption{Plot of (a) output current against input current and (b) output current against $V_{DS}$}
 	\end{figure}
+	
+	If the connection between drain and gate of MOSFET $M_1$ is removed, the current mirror won't function any more, as without connection between the drain and gate, the MOSFET never switch on. Since it do not switch, the current could not be copied to the other side.
+	
+	The current mirror is used to work as an active load of a common-source amplifier with reference current set to $I_{REF} = \SI{100}{\micro\ampere}$. A DC simulation of this circuit is shown in Figure~\ref{fig:mixedAmpDc} and based on the simulation, the maximum gain appears when $V_{in,DC} = \SI{1.175}{V}$ and the gain is $112.5$.
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.7\linewidth]{Figures/E3_Current_Mirror/mixed_amp_dc}
+		\caption{DC simulation of the circuit}
+		\label{fig:mixedAmpDc}
+	\end{figure}
+	
+	Figure~\ref{fig:mixedAmpTran} shows a plot of input and output signal at $\SI{1}{\kilo\hertz}$, the gain measured here is $112.56$, which matches the gain measured in DC simulation.
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.7\linewidth]{Figures/E3_Current_Mirror/mixed_amp_tran}
+		\caption{Plot of input and output signal}
+		\label{fig:mixedAmpTran}
+	\end{figure}
+	
+	Figure~\ref{fig:mixedAmpAc} shows the Bode plot of the amplifier in AC simulation. The low-frequency gain measured in the simulation is $112.56$ which matches the value measured in DC and transient simulation.
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.7\linewidth]{Figures/E3_Current_Mirror/mixed_amp_ac}
+		\caption{Bode plot of the amplifier in AC simulation}
+		\label{fig:mixedAmpAc}
+	\end{figure}
+	
+	The gain measured when $I_{REF} = \SI{50}{\micro\ampere}$ is $140.7$ and the gain measured when $I_{REF} = \SI{200}{\micro\ampere}$ is $83.74$. The gain of the circuit shown could be described as:
+	\begin{equation}
+		A_v = - g_m \left(r_{o1} \parallel r_{o2}\right) = - \frac{\sqrt{2\beta_1}}{\left(\lambda_1 + \lambda_2 \sqrt{\left|I_{D}\right|}\right)}
+	\end{equation}
+	Noticing that $\beta_1$, $\lambda_1$ and $\lambda_2$ are all constants, the gain is inversely proportional to square root of $I_d$, which is the reference current $I_{REF}$. Thus, with a smaller value of $I_{REF}$, the gain of the amplifier increases.
 	
 \end{document}
