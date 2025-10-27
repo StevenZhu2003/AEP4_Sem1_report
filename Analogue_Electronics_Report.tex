@@ -36,7 +36,7 @@
 		\label{fig:groupIdVds}
 	\end{figure}
 	
-	Considering the plot which $V_{GS} = \SI{2}{\volt}$, the curve in the saturation region could be expressed as equation \eqref{eq:idsSat}. The parameter $\lambda$ in the equation is used to model the channel-length modulation effect of the transistor.
+	Considering the plot which $V_{GS} = \SI{2}{\volt}$, the curve in the saturation region could be expressed as equation \eqref{eq:idsSat} \cite{mitraAnalogueElectronicsProject2024}. The parameter $\lambda$ in the equation is used to model the channel-length modulation effect of the transistor.
 	\begin{equation}
 		I_{DS} = \beta \left(V_{GS} - V_{T}\right)^2 \left(1 + \lambda V_{DS}\right)
 		\label{eq:idsSat}
@@ -45,7 +45,7 @@
 	\begin{equation}
 		\frac{I_{DS1}}{I_{DS2}} = \frac{9.781 \times 10^{-4}}{9.805 \times 10^{-4}} = \frac{1 + \lambda V_{DS1}}{1 + \lambda V_{DS2}} = \frac{1 + 3\lambda}{1 + 3.5\lambda}
 	\end{equation}
-	Simplify this equation to get $\lambda = 4.981 \times 10^{-3}\ \si{\per\volt}$. The output resistance of the transistor can be calculated using equation \eqref{eq:outputRes}. 
+	Simplify this equation to get $\lambda = 4.981 \times 10^{-3}\ \si{\per\volt}$. The output resistance of the transistor can be calculated using equation \eqref{eq:outputRes}\cite{mitraAnalogueElectronicsProject2024}. 
 	\begin{equation}
 		r_o = \frac{\delta V_{DS}}{\delta I_{DS}} \approx \frac{1 + \lambda V_{DS}}{\lambda I_{DS}}
 		\label{eq:outputRes}
@@ -73,7 +73,7 @@
 		\caption{Plot of $I_{D}$ against $V_{GS}$ in (a) linear scale and (b) log scale when $V_{DS} = \SI{5}{\volt}$}
 	\end{figure}
 	
-	The sub-threshold slope is defined as:
+	The sub-threshold slope is defined as\cite{razaviDesignAnalogCMOS2017}:
 	\begin{equation}
 		S = \frac{\partial V_{GS}}{\partial \left(\log I_D\right)} \approx \frac{\Delta V_{GS}}{\Delta \left(\log I_D\right)}
 	\end{equation}
@@ -87,7 +87,7 @@
 	\begin{figure}[htbp]
 		\centering
 		\includegraphics[width = 0.5\linewidth]{Figures/E1_NMOS_Characteristic/Body_diode}
-		\caption{The diode formed between drain and bulk and source and bulk}
+		\caption{The diode formed between drain and bulk and source and bulk\cite{schmidtFETsFieldEffectTransistors2021}}
 		\label{fig:bodyDiode}
 	\end{figure}
 	
@@ -110,10 +110,10 @@
 			\caption{}
 			\label{fig:dcResponse}
 		\end{subfigure}
-		\caption{(a) The circuit of common-source amplifier (b) The large signal DC response of amplifier}
+		\caption{(a) The circuit of common-source amplifier (b) The large signal DC response of amplifier\cite{razaviDesignAnalogCMOS2017}}
 	\end{figure}
 	
-	The small signal gain of this amplifier is given as:
+	The small signal gain of this amplifier is given as\cite{razaviDesignAnalogCMOS2017}:
 	\begin{equation}
 		A_v = \frac{V_{out}}{V_{in}} = -g_m \left(R_D \parallel r_o\right)
 		\label{eq:invAmpGain}
@@ -156,7 +156,7 @@
 	\begin{figure}[htbp]
 		\centering
 		\includegraphics[width=0.3\linewidth]{Figures/E3_Current_Mirror/current_mirror}
-		\caption{Basic current mirror circuit}
+		\caption{Basic current mirror circuit\cite{razaviDesignAnalogCMOS2017}}
 		\label{fig:currentMirror}
 	\end{figure}
 	
@@ -182,19 +182,24 @@
 	The current mirror is used to work as an active load of a common-source amplifier with reference current set to $I_{REF} = \SI{100}{\micro\ampere}$. A DC simulation of this circuit is shown in Figure~\ref{fig:mixedAmpDc} and based on the simulation, the maximum gain appears when $V_{in,DC} = \SI{1.175}{V}$ and the gain is $112.5$.
 	
 	\begin{figure}[htbp]
-		\centering
-		\includegraphics[width=0.7\linewidth]{Figures/E3_Current_Mirror/mixed_amp_dc}
-		\caption{DC simulation of the circuit}
-		\label{fig:mixedAmpDc}
+		
 	\end{figure}
 	
 	Figure~\ref{fig:mixedAmpTran} shows a plot of input and output signal at $\SI{1}{\kilo\hertz}$, the gain measured here is $112.56$, which matches the gain measured in DC simulation.
 	
 	\begin{figure}[htbp]
 		\centering
-		\includegraphics[width=0.7\linewidth]{Figures/E3_Current_Mirror/mixed_amp_tran}
-		\caption{Plot of input and output signal}
-		\label{fig:mixedAmpTran}
+		\begin{subfigure}{0.48\linewidth}
+			\includegraphics[width=\linewidth]{Figures/E3_Current_Mirror/mixed_amp_dc}
+			\caption{}
+			\label{fig:mixedAmpDc}
+		\end{subfigure}
+		\begin{subfigure}{0.48\linewidth}
+			\includegraphics[width=\linewidth]{Figures/E3_Current_Mirror/mixed_amp_tran}
+			\caption{}
+			\label{fig:mixedAmpTran}
+		\end{subfigure}
+		\caption{Plot of (a) DC simulation and (b) transient simulation of the amplifier}
 	\end{figure}
 	
 	Figure~\ref{fig:mixedAmpAc} shows the Bode plot of the amplifier in AC simulation. The low-frequency gain measured in the simulation is $112.56$ which matches the value measured in DC and transient simulation.
@@ -206,10 +211,15 @@
 		\label{fig:mixedAmpAc}
 	\end{figure}
 	
-	The gain measured when $I_{REF} = \SI{50}{\micro\ampere}$ is $140.7$ and the gain measured when $I_{REF} = \SI{200}{\micro\ampere}$ is $83.74$. The gain of the circuit shown could be described as:
+	The gain measured when $I_{REF} = \SI{50}{\micro\ampere}$ is $140.7$ and the gain measured when $I_{REF} = \SI{200}{\micro\ampere}$ is $83.74$. The gain of the circuit shown could be described as\cite{razaviDesignAnalogCMOS2017}:
 	\begin{equation}
 		A_v = - g_m \left(r_{o1} \parallel r_{o2}\right) = - \frac{\sqrt{2\beta_1}}{\left(\lambda_1 + \lambda_2 \sqrt{\left|I_{D}\right|}\right)}
 	\end{equation}
 	Noticing that $\beta_1$, $\lambda_1$ and $\lambda_2$ are all constants, the gain is inversely proportional to square root of $I_d$, which is the reference current $I_{REF}$. Thus, with a smaller value of $I_{REF}$, the gain of the amplifier increases.
+	
+	\newpage
+	
+	\bibliographystyle{IEEEtran}
+	\bibliography{reference.bib}
 	
 \end{document}
